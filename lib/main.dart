@@ -33,6 +33,7 @@ class _HolophoneAppState extends State<HolophoneApp> {
   final SurahNamed _named = SurahNamed();
   int _currentIndex = -1; // Хранит индекс текущего воспроизведения
   bool _isPlaying = false; // Хранит состояние воспроизведения
+  bool _isLooping = false; // Хранит состояние зацикливания
 
   @override
   void dispose() {
@@ -67,6 +68,17 @@ class _HolophoneAppState extends State<HolophoneApp> {
     setState(() {
       _currentIndex = index;
       _isPlaying = true;
+    });
+  }
+
+  Future<void> _toggleLoop() async {
+    if (_isLooping) {
+      await _player.setReleaseMode(ReleaseMode.release);
+    } else {
+      await _player.setReleaseMode(ReleaseMode.loop);
+    }
+    setState(() {
+      _isLooping = !_isLooping;
     });
   }
 
@@ -106,20 +118,29 @@ class _HolophoneAppState extends State<HolophoneApp> {
                               _named.named[index],
                               style: const TextStyle(
                                   color: Colors.black,
-                                  fontSize: 40,
-                                  fontWeight: FontWeight.bold),
+                                  fontSize: 35,
+                                  fontWeight: FontWeight.normal),
                             ),
                           ),
                           const Spacer(),
                           IconButton(
-                              onPressed: () {
-                                _restartAudio(index);
-                              },
-                              icon: const Icon(
-                                Icons.repeat,
-                                size: 35,
-                                color: Colors.black,
-                              ))
+                            onPressed: () {
+                              _restartAudio(index);
+                            },
+                            icon: const Icon(
+                              Icons.repeat,
+                              size: 25,
+                              color: Colors.black,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: _toggleLoop,
+                            icon: Icon(
+                              _isLooping ? Icons.repeat_one : Icons.repeat,
+                              size: 30,
+                              color: _isLooping ? Colors.blue : Colors.black,
+                            ),
+                          ),
                         ],
                       ),
                     )),
