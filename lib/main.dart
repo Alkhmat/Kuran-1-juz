@@ -86,27 +86,43 @@ class _HolophoneAppState extends State<HolophoneApp> {
             return Column(
               children: [
                 InkWell(
-                  onTap: () async {
-                    if (_currentIndex == index) {
-                      // Если нажата та же кнопка, переключаем состояние воспроизведения
-                      await _playPauseAudio(index);
-                    } else {
-                      // Запустить или перезапустить трек, если выбран новый
-                      await _restartAudio(index);
-                    }
-                  },
-                  child: ListTile(
-                    trailing: IconButton(
-                      onPressed: () {
-                        _restartAudio(index);
-                      },
-                      icon: const Icon(Icons.restart_alt),
-                    ),
-                    title: Text(
-                      _named.named[index],
-                    ),
-                  ),
-                ),
+                    onTap: () async {
+                      if (_currentIndex == index) {
+                        // Если нажата та же кнопка, переключаем состояние воспроизведения
+                        await _playPauseAudio(index);
+                      } else {
+                        // Запустить или перезапустить трек, если выбран новый
+                        await _restartAudio(index);
+                      }
+                    },
+                    child: Container(
+                      height: 80,
+                      width: double.infinity,
+                      color: Colors.white38,
+                      child: Row(
+                        children: [
+                          FittedBox(
+                            child: Text(
+                              _named.named[index],
+                              style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 40,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          const Spacer(),
+                          IconButton(
+                              onPressed: () {
+                                _restartAudio(index);
+                              },
+                              icon: const Icon(
+                                Icons.repeat,
+                                size: 35,
+                                color: Colors.black,
+                              ))
+                        ],
+                      ),
+                    )),
                 const Divider(
                   color: Colors.black,
                   height: 1,
