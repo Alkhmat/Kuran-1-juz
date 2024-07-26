@@ -31,9 +31,9 @@ class _HolophoneAppState extends State<HolophoneApp> {
   final AudioPlayer _player = AudioPlayer();
   final SurahPlayer _mp3 = SurahPlayer();
   final SurahNamed _named = SurahNamed();
-  int _currentIndex = -1; // Хранит индекс текущего воспроизведения
-  bool _isPlaying = false; // Хранит состояние воспроизведения
-  bool _isLooping = false; // Хранит состояние зацикливания
+  int _currentIndex = -1;
+  bool _isPlaying = false;
+  bool _isLooping = false;
 
   @override
   void dispose() {
@@ -52,7 +52,6 @@ class _HolophoneAppState extends State<HolophoneApp> {
         _isPlaying = !_isPlaying;
       });
     } else {
-      // Если проигрывается другой трек, сначала остановить текущий
       await _player.stop();
       await _player.play(AssetSource(_mp3.mp3[index]));
       setState(() {
@@ -94,16 +93,13 @@ class _HolophoneAppState extends State<HolophoneApp> {
             if (index >= _named.named.length) {
               return const SizedBox.shrink();
             }
-
             return Column(
               children: [
                 InkWell(
                     onTap: () async {
                       if (_currentIndex == index) {
-                        // Если нажата та же кнопка, переключаем состояние воспроизведения
                         await _playPauseAudio(index);
                       } else {
-                        // Запустить или перезапустить трек, если выбран новый
                         await _restartAudio(index);
                       }
                     },
