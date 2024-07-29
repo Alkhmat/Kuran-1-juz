@@ -20,6 +20,13 @@ class MyApp extends StatelessWidget {
   }
 }
 
+/*
+
+class HolophoneApp extends StatefulWidget {
+  const HolophoneApp({super.key});
+
+  @override
+  State<HolophoneApp> createState() => _HolophoneAppSt */
 class HolophoneApp extends StatefulWidget {
   const HolophoneApp({super.key});
 
@@ -84,72 +91,85 @@ class _HolophoneAppState extends State<HolophoneApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox(
-        width: double.infinity,
-        height: 1000,
-        child: ListView.builder(
-          itemCount: _mp3.mp3.length,
-          itemBuilder: (context, index) {
-            if (index >= _named.named.length) {
-              return const SizedBox.shrink();
-            }
-            return Column(
-              children: [
-                InkWell(
-                    onTap: () async {
-                      if (_currentIndex == index) {
-                        await _playPauseAudio(index);
-                      } else {
-                        await _restartAudio(index);
-                      }
-                    },
-                    child: Container(
-                      height: 80,
-                      width: double.infinity,
-                      color: Colors.white38,
-                      child: Row(
-                        children: [
-                          FittedBox(
-                            child: Text(
-                              _named.named[index],
-                              style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 35,
-                                  fontWeight: FontWeight.normal),
-                            ),
-                          ),
-                          const Spacer(),
-                          IconButton(
-                            onPressed: () {
-                              _restartAudio(index);
-                            },
-                            icon: const Icon(
-                              Icons.repeat,
-                              size: 25,
-                              color: Colors.black,
-                            ),
-                          ),
-                          IconButton(
-                            onPressed: _toggleLoop,
-                            icon: Icon(
-                              _isLooping ? Icons.repeat_one : Icons.repeat,
-                              size: 30,
-                              color: _isLooping ? Colors.blue : Colors.black,
-                            ),
-                          ),
-                        ],
-                      ),
-                    )),
-                const Divider(
-                  color: Colors.black,
-                  height: 1,
-                )
-              ],
-            );
-          },
-          shrinkWrap: true,
-          scrollDirection: Axis.vertical,
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: const Text(
+          'First Juz',
+          style: TextStyle(color: Colors.white, fontSize: 20),
         ),
+      ),
+      body: ListView.builder(
+        itemCount: _mp3.mp3.length,
+        itemBuilder: (context, index) {
+          if (index >= _named.named.length) {
+            return const SizedBox.shrink();
+          }
+          return Column(
+            children: [
+              InkWell(
+                  onTap: () async {
+                    if (_currentIndex == index) {
+                      await _playPauseAudio(index);
+                    } else {
+                      await _restartAudio(index);
+                    }
+                  },
+                  child: ListTile(
+                    leading: Text(
+                      '${index + 1}',
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    title: Text(
+                      _named.named[index],
+                      style: const TextStyle(color: Colors.white, fontSize: 30),
+                    ),
+                    subtitle: Text(
+                      'Suratun Al ${index + 1}',
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    trailing: const Icon(Icons.repeat_on_outlined),
+                    //   children: [
+                    //     FittedBox(
+                    //       child: Text(
+                    //         _named.named[index],
+                    //         style: const TextStyle(
+                    //             color: Colors.black,
+                    //             fontSize: 35,
+                    //             fontWeight: FontWeight.normal),
+                    //       ),
+                    //     ),
+                    //     const Spacer(),
+                    //     IconButton(
+                    //       onPressed: () {
+                    //         _restartAudio(index);
+                    //       },
+                    //       icon: const Icon(
+                    //         Icons.repeat,
+                    //         size: 25,
+                    //         color: Colors.black,
+                    //       ),
+                    //     ),
+                    //     IconButton(
+                    //       onPressed: _toggleLoop,
+                    //       icon: Icon(
+                    //         _isLooping ? Icons.repeat_one : Icons.repeat,
+                    //         size: 30,
+                    //         color: _isLooping ? Colors.blue : Colors.black,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                  )),
+              const Divider(
+                color: Colors.black,
+                height: 1,
+              )
+            ],
+          );
+        },
+        shrinkWrap: true,
+        scrollDirection: Axis.vertical,
       ),
     );
   }
