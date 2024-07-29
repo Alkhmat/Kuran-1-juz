@@ -1,5 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:xzelaphone_app/screen/list_of_surah_and_name.dart';
 
 void main() {
@@ -108,59 +109,35 @@ class _HolophoneAppState extends State<HolophoneApp> {
           return Column(
             children: [
               InkWell(
-                  onTap: () async {
-                    if (_currentIndex == index) {
-                      await _playPauseAudio(index);
-                    } else {
-                      await _restartAudio(index);
-                    }
-                  },
-                  child: ListTile(
-                    leading: Text(
-                      '${index + 1}',
-                      style: const TextStyle(color: Colors.white),
+                onTap: () async {
+                  if (_currentIndex == index) {
+                    await _playPauseAudio(index);
+                  } else {
+                    await _restartAudio(index);
+                  }
+                },
+                child: ListTile(
+                  leading: Text(
+                    '${index + 1}',
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                  title: Text(
+                    _named.named[index],
+                    style: GoogleFonts.abel(
+                      textStyle:
+                          const TextStyle(color: Colors.white, fontSize: 30),
                     ),
-                    title: Text(
-                      _named.named[index],
-                      style: const TextStyle(color: Colors.white, fontSize: 30),
+                  ),
+                  trailing: IconButton(
+                    onPressed: _toggleLoop,
+                    icon: Icon(
+                      _isLooping ? Icons.repeat_one : Icons.repeat_on_outlined,
+                      color: _isLooping ? Colors.white : Colors.white,
+                      size: 30,
                     ),
-                    subtitle: Text(
-                      'Suratun Al ${index + 1}',
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                    trailing: const Icon(Icons.repeat_on_outlined),
-                    //   children: [
-                    //     FittedBox(
-                    //       child: Text(
-                    //         _named.named[index],
-                    //         style: const TextStyle(
-                    //             color: Colors.black,
-                    //             fontSize: 35,
-                    //             fontWeight: FontWeight.normal),
-                    //       ),
-                    //     ),
-                    //     const Spacer(),
-                    //     IconButton(
-                    //       onPressed: () {
-                    //         _restartAudio(index);
-                    //       },
-                    //       icon: const Icon(
-                    //         Icons.repeat,
-                    //         size: 25,
-                    //         color: Colors.black,
-                    //       ),
-                    //     ),
-                    //     IconButton(
-                    //       onPressed: _toggleLoop,
-                    //       icon: Icon(
-                    //         _isLooping ? Icons.repeat_one : Icons.repeat,
-                    //         size: 30,
-                    //         color: _isLooping ? Colors.blue : Colors.black,
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
-                  )),
+                  ),
+                ),
+              ),
               const Divider(
                 color: Colors.black,
                 height: 1,
